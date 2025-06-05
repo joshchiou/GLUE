@@ -497,7 +497,7 @@ def estimate_balancing_weight(
             use_rep=use_rep,
             metric="cosine",
         )
-        sc.tl.leiden(adata_, resolution=resolution, flavor="igraph" and n_iterations=2)
+        sc.tl.leiden(adata_, resolution=resolution, flavor="igraph", n_iterations=2)
 
     leidens = [
         aggregate_obs(
