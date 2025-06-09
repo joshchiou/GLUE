@@ -510,7 +510,7 @@ class AnnDataset(Dataset):
     def _extract_x(self, adata: AnnData, data_config: DATA_CONFIG) -> AnyArray:
         default_dtype = get_default_numpy_dtype()
         features = data_config["features"]
-        use_layer = data_config["use_layer"]
+        use_layer = data_config.get("use_layer", None)
         if not np.array_equal(adata.var_names, features):
             adata = adata[:, features]  # This will load all data to memory if backed
         if use_layer:
@@ -565,8 +565,8 @@ class AnnDataset(Dataset):
         return np.zeros(adata.shape[0], dtype=int)
 
     def _extract_xlbl(self, adata: AnnData, data_config: DATA_CONFIG) -> AnyArray:
-        use_cell_type = data_config["use_cell_type"]
-        cell_types = data_config["cell_types"]
+        use_cell_type = data_config.get("use_cell_type", None)
+        cell_types = data_config.get("cell_types", None)
         if use_cell_type:
             if use_cell_type not in adata.obs:
                 raise ValueError(
@@ -578,7 +578,7 @@ class AnnDataset(Dataset):
 
     def _extract_xdwt(self, adata: AnnData, data_config: DATA_CONFIG) -> AnyArray:
         default_dtype = get_default_numpy_dtype()
-        use_dsc_weight = data_config["use_dsc_weight"]
+        use_dsc_weight = data_config.get("use_dsc_weight", None)
         if use_dsc_weight:
             if use_dsc_weight not in adata.obs:
                 raise ValueError(
