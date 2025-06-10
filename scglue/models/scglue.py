@@ -61,7 +61,6 @@ register_prob_model("ZINB", sc.NBDataEncoder, sc.ZINBDataDecoder)
 
 
 class SCGLUE(GLUE):
-
     r"""
     GLUE network for single-cell multi-omics data integration
 
@@ -101,7 +100,6 @@ class SCGLUE(GLUE):
 
 
 class IndSCGLUE(SCGLUE):
-
     r"""
     GLUE network where cell and feature in different modalities are independent
 
@@ -156,7 +154,6 @@ DataTensors = Tuple[
 
 @logged
 class SCGLUETrainer(GLUETrainer):
-
     r"""
     Trainer for :class:`SCGLUE`
 
@@ -424,7 +421,6 @@ PairedDataTensors = Tuple[
 
 @logged
 class PairedSCGLUETrainer(SCGLUETrainer):
-
     r"""
     Paired trainer for :class:`SCGLUE`
 
@@ -697,7 +693,6 @@ class PairedSCGLUETrainer(SCGLUETrainer):
 
 @logged
 class SCGLUEModel(Model):
-
     r"""
     GLUE model for single-cell multi-omics data integration
 
@@ -725,12 +720,18 @@ class SCGLUEModel(Model):
     TRAINER_TYPE = SCGLUETrainer
 
     GRAPH_BATCHES: int = 32  # Number of graph batches in each graph epoch
-    ALIGN_BURNIN_PRG: float = 8.0  # Effective optimization progress of align_burnin (learning rate * iterations)
-    MAX_EPOCHS_PRG: float = 48.0  # Effective optimization progress of max_epochs (learning rate * iterations)
+    ALIGN_BURNIN_PRG: float = (
+        8.0  # Effective optimization progress of align_burnin (learning rate * iterations)
+    )
+    MAX_EPOCHS_PRG: float = (
+        48.0  # Effective optimization progress of max_epochs (learning rate * iterations)
+    )
     PATIENCE_PRG: float = (
         4.0  # Effective optimization progress of patience (learning rate * iterations)
     )
-    REDUCE_LR_PATIENCE_PRG: float = 2.0  # Effective optimization progress of reduce_lr_patience (learning rate * iterations)
+    REDUCE_LR_PATIENCE_PRG: float = (
+        2.0  # Effective optimization progress of reduce_lr_patience (learning rate * iterations)
+    )
 
     def __init__(
         self,
@@ -784,7 +785,7 @@ class SCGLUEModel(Model):
             )
             all_ct = all_ct.union(
                 set()
-                if data_config["cell_types"] is None
+                if data_config.get("cell_types") is None
                 else data_config["cell_types"]
             )
             self.modalities[k] = data_config
@@ -1349,7 +1350,6 @@ class SCGLUEModel(Model):
 
 @logged
 class PairedSCGLUEModel(SCGLUEModel):
-
     r"""
     GLUE model for partially-paired single-cell multi-omics data integration
 
