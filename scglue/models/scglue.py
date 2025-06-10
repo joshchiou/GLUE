@@ -776,7 +776,7 @@ class SCGLUEModel(Model):
             )
             data_config["batches"] = (
                 pd.Index([])
-                if data_config["batches"] is None
+                if data_config.get("batches") is None
                 else pd.Index(data_config["batches"])
             )
             u2x[k] = _DECODER_MAP[data_config["prob_model"]](
