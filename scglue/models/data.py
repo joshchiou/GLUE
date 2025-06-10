@@ -553,8 +553,8 @@ class AnnDataset(Dataset):
         return np.empty((adata.shape[0], 0), dtype=default_dtype)
 
     def _extract_xbch(self, adata: AnnData, data_config: DATA_CONFIG) -> AnyArray:
-        use_batch = data_config["use_batch"]
-        batches = data_config["batches"]
+        use_batch = data_config.get("use_batch")
+        batches = data_config.get("batches")
         if use_batch:
             if use_batch not in adata.obs:
                 raise ValueError(
@@ -565,8 +565,8 @@ class AnnDataset(Dataset):
         return np.zeros(adata.shape[0], dtype=int)
 
     def _extract_xlbl(self, adata: AnnData, data_config: DATA_CONFIG) -> AnyArray:
-        use_cell_type = data_config.get("use_cell_type", None)
-        cell_types = data_config.get("cell_types", None)
+        use_cell_type = data_config.get("use_cell_type")
+        cell_types = data_config.get("cell_types")
         if use_cell_type:
             if use_cell_type not in adata.obs:
                 raise ValueError(
@@ -578,7 +578,7 @@ class AnnDataset(Dataset):
 
     def _extract_xdwt(self, adata: AnnData, data_config: DATA_CONFIG) -> AnyArray:
         default_dtype = get_default_numpy_dtype()
-        use_dsc_weight = data_config.get("use_dsc_weight", None)
+        use_dsc_weight = data_config.get("use_dsc_weight")
         if use_dsc_weight:
             if use_dsc_weight not in adata.obs:
                 raise ValueError(
